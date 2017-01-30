@@ -30,19 +30,23 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Y9U-Hh-zqV">
-                                                    <rect key="frame" x="8" y="0.0" width="359" height="21"/>
+                                                    <rect key="frame" x="124" y="0.0" width="243" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PmT-UQ-mMA">
-                                                    <rect key="frame" x="8" y="22" width="359" height="103"/>
+                                                    <rect key="frame" x="124" y="22" width="243" height="103"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="kYw-4h-bEe">
+                                                    <rect key="frame" x="-13" y="-3" width="129" height="136"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration" identifier="MovieCell">
@@ -50,6 +54,7 @@
                                         </accessibility>
                                         <connections>
                                             <outlet property="overViewLabel" destination="PmT-UQ-mMA" id="zaz-eO-tgg"/>
+                                            <outlet property="posterView" destination="kYw-4h-bEe" id="koe-VJ-cyU"/>
                                             <outlet property="titleLabel" destination="Y9U-Hh-zqV" id="onh-X0-ru8"/>
                                         </connections>
                                     </tableViewCell>
@@ -66,7 +71,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-27" y="-1318"/>
+            <point key="canvasLocation" x="-27.5" y="-1318.5"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
