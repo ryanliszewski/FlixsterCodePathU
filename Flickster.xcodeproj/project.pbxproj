@@ -12,6 +12,7 @@
 		73B72E321E3F03F800267E05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73B72E311E3F03F800267E05 /* Assets.xcassets */; };
 		73B72E351E3F03F800267E05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73B72E331E3F03F800267E05 /* LaunchScreen.storyboard */; };
 		73B72E3D1E3F093200267E05 /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B72E3C1E3F093200267E05 /* MoviesViewController.swift */; };
+		73B72E401E3F191900267E05 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B72E3F1E3F191900267E05 /* MovieCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		73B72E341E3F03F800267E05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		73B72E361E3F03F800267E05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		73B72E3C1E3F093200267E05 /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
+		73B72E3F1E3F191900267E05 /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +56,31 @@
 		73B72E291E3F03F700267E05 /* Flickster */ = {
 			isa = PBXGroup;
 			children = (
+				73B72E421E3F195E00267E05 /* View Controller  */,
+				73B72E3E1E3F18F300267E05 /* Views */,
 				73B72E2A1E3F03F800267E05 /* AppDelegate.swift */,
 				73B72E2E1E3F03F800267E05 /* Main.storyboard */,
 				73B72E311E3F03F800267E05 /* Assets.xcassets */,
 				73B72E331E3F03F800267E05 /* LaunchScreen.storyboard */,
 				73B72E361E3F03F800267E05 /* Info.plist */,
-				73B72E3C1E3F093200267E05 /* MoviesViewController.swift */,
 			);
 			path = Flickster;
+			sourceTree = "<group>";
+		};
+		73B72E3E1E3F18F300267E05 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				73B72E3F1E3F191900267E05 /* MovieCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		73B72E421E3F195E00267E05 /* View Controller  */ = {
+			isa = PBXGroup;
+			children = (
+				73B72E3C1E3F093200267E05 /* MoviesViewController.swift */,
+			);
+			name = "View Controller ";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +157,7 @@
 			files = (
 				73B72E2B1E3F03F800267E05 /* AppDelegate.swift in Sources */,
 				73B72E3D1E3F093200267E05 /* MoviesViewController.swift in Sources */,
+				73B72E401E3F191900267E05 /* MovieCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
