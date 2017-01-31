@@ -6,6 +6,7 @@ target 'Flickster' do
   use_frameworks!
 
   pod 'AFNetworking'
+  pod ‘MBProgressHUD’
 
   # Pods for Flickster
 
