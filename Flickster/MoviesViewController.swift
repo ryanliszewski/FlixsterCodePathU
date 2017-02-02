@@ -120,8 +120,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         cell.overViewLabel.text = overview
         
         
-        
-        print("row\(indexPath.row)")
         return cell;
     }
     

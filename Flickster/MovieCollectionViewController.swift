@@ -7,11 +7,25 @@
 //
 
 import UIKit
+import MBProgressHUD
+import AFNetworking
 
-class MovieCollectionViewController: UIViewController {
+class MovieCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    var movies: [NSDictionary]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        self.movieApiCall()
+        
 
         // Do any additional setup after loading the view.
     }
@@ -21,6 +35,68 @@ class MovieCollectionViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func movieApiCall() {
+        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
+        
+        
+        let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+            if let data = data {
+                if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
+                    
+                    MBProgressHUD.hide(for: self.view, animated:true)
+                    print(dataDictionary)
+                    
+                    self.movies = dataDictionary["results"] as? [NSDictionary]
+                    self.collectionView.reloadData()
+                    //self.networkErrorView.isHidden = true
+                }
+                
+            }else{
+                //self.networkError()
+                self.movieApiCall()
+            }
+            
+        }
+        task.resume()
+        
+    }
+    
+    func refreshControlAction(_ refreshControl: UIRefreshControl){
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        collectionView.insertSubview(refreshControl, at: 0)
+        
+        self.movieApiCall()
+        refreshControl.endRefreshing()
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let movies = movies {
+            return movies.count
+        }else{
+            return 0;
+        }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell" , for: indexPath as IndexPath) as! CollectionViewCell
+        
+        let movie = movies![indexPath.row]
+        let posterPath = movie["poster_path"] as! String
+        
+        let baseUrl = "https://image.tmdb.org/t/p/w500"
+        let imageUrl = NSURL(string: baseUrl + posterPath)
+        
+        cell.photoViewCell.setImageWith(imageUrl as! URL)
+        
+        
+        return cell
+        
+    }
 
     /*
     // MARK: - Navigation
