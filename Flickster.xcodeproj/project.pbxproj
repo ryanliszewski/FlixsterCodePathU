@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		735AD52B1E431E230061E1B3 /* MovieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AD52A1E431E230061E1B3 /* MovieCollectionViewController.swift */; };
 		73B72E2B1E3F03F800267E05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B72E2A1E3F03F800267E05 /* AppDelegate.swift */; };
 		73B72E301E3F03F800267E05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73B72E2E1E3F03F800267E05 /* Main.storyboard */; };
 		73B72E321E3F03F800267E05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73B72E311E3F03F800267E05 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		4978CDD89F7E5BBA7C9C5869 /* Pods-Flickster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flickster.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flickster/Pods-Flickster.debug.xcconfig"; sourceTree = "<group>"; };
 		5B23D398E097771190239E3B /* Pods-Flickster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flickster.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flickster/Pods-Flickster.release.xcconfig"; sourceTree = "<group>"; };
+		735AD52A1E431E230061E1B3 /* MovieCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewController.swift; sourceTree = "<group>"; };
 		73B72E271E3F03F700267E05 /* Flickster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flickster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73B72E2A1E3F03F800267E05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		73B72E2F1E3F03F800267E05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				73B72E3C1E3F093200267E05 /* MoviesViewController.swift */,
+				735AD52A1E431E230061E1B3 /* MovieCollectionViewController.swift */,
 			);
 			name = "View Controller ";
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				73B72E2B1E3F03F800267E05 /* AppDelegate.swift in Sources */,
+				735AD52B1E431E230061E1B3 /* MovieCollectionViewController.swift in Sources */,
 				73B72E3D1E3F093200267E05 /* MoviesViewController.swift in Sources */,
 				73B72E401E3F191900267E05 /* MovieCell.swift in Sources */,
 			);
@@ -396,6 +400,7 @@
 				73B72E3B1E3F03F800267E05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

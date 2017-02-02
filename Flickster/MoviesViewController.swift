@@ -14,6 +14,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 
     
     @IBOutlet weak var tableView: UITableView!
+
+    @IBOutlet weak var networkErrorView: UIView!
+  
+    @IBOutlet weak var networkErrorLabel: UILabel!
     
     var movies: [NSDictionary]?
     
@@ -24,32 +28,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.dataSource = self
         tableView.delegate = self
         
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
-        tableView.insertSubview(refreshControl, at: 0)
-        
-        
-        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
-        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
+        networkErrorView.isHidden = true
         
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
-        let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-            if let data = data {
-                if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                    print(dataDictionary)
-                    
-                    self.movies = dataDictionary["results"] as? [NSDictionary]
-                    self.tableView.reloadData()
-                }
-            }
-        }
-        task.resume()
+        self.movieApiCall()
         
-        // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,28 +42,52 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    func refreshControlAction(_ refreshControl: UIRefreshControl){
-      
+    
+    
+    func movieApiCall() {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-        
+    
         let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let data = data {
                 if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-                    MBProgressHUD.hide(for: self.view, animated: true)
+                    
+                    MBProgressHUD.hide(for: self.view, animated:true)
                     print(dataDictionary)
                     
                     self.movies = dataDictionary["results"] as? [NSDictionary]
                     self.tableView.reloadData()
-                    refreshControl.endRefreshing()
+                    self.networkErrorView.isHidden = true
                 }
+                
+            }else{
+                self.networkError()
+                self.movieApiCall()
             }
+      
         }
         task.resume()
+
+    }
+    
+    
+    func refreshControlAction(_ refreshControl: UIRefreshControl){
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        tableView.insertSubview(refreshControl, at: 0)
+        
+        self.movieApiCall()
+        refreshControl.endRefreshing()
+    }
+    
+    func networkError(){
+        networkErrorLabel.layer.masksToBounds = true
+        networkErrorLabel.layer.cornerRadius = 5
+        self.networkErrorView.isHidden = false
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
