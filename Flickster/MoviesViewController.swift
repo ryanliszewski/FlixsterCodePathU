@@ -87,7 +87,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         networkErrorLabel.layer.masksToBounds = true
         networkErrorLabel.layer.cornerRadius = 5
         self.networkErrorView.isHidden = false
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{

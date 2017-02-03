@@ -13,30 +13,31 @@ import AFNetworking
 class MovieCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var searchBar: UISearchBar!
-
+    @IBOutlet weak var networkErrorView: UIView!
+    @IBOutlet weak var networkErrorLabel: UILabel!
+    
+    
     var movies: [NSDictionary]?
     var filteredMovies: [NSDictionary]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+    
         collectionView.delegate = self
         collectionView.dataSource = self
         
         searchBar.delegate = self
         searchBar.barStyle = UIBarStyle.blackTranslucent
 
+        networkErrorView.isHidden = true
 
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-        self.movieApiCall()
-        
         let refreshControl = UIRefreshControl()
         collectionView.insertSubview(refreshControl, at: 0)
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        self.movieApiCall()
 
         // Do any additional setup after loading the view.
     }
@@ -64,11 +65,12 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                     self.filteredMovies = self.movies
         
                     self.collectionView.reloadData()
-                    //self.networkErrorView.isHidden = true
+                    self.networkErrorView.isHidden = true
+                    self.searchBar.isHidden = false
                 }
                 
             }else{
-                //self.networkError()
+                self.networkError()
                 self.movieApiCall()
             }
             
@@ -80,6 +82,13 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     func refreshControlAction(_ refreshControl: UIRefreshControl){
         self.movieApiCall()
         refreshControl.endRefreshing()
+    }
+    
+    func networkError(){
+        networkErrorLabel.layer.masksToBounds = true
+        networkErrorLabel.layer.cornerRadius = 5
+        self.searchBar.isHidden = true
+        self.networkErrorView.isHidden = false
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
