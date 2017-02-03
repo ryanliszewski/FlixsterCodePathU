@@ -26,7 +26,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="138"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zYb-3k-smn" id="lvq-Ef-srR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="137.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="138"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Y9U-Hh-zqV">
@@ -142,7 +142,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="HDJ-Rh-oo7" id="19x-AK-s3V"/>
-                        <outlet property="searchBar" destination="OKl-Gs-PyG" id="ot8-DJ-3zv"/>
+                        <outlet property="searchBar" destination="OKl-Gs-PyG" id="d6L-Pt-vgn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QlV-59-kiW" userLabel="First Responder" sceneMemberID="firstResponder"/>

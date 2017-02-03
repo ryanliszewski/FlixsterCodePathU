@@ -16,7 +16,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     @IBOutlet weak var searchBar: UISearchBar!
 
-    
     var movies: [NSDictionary]?
     var filteredMovies: [NSDictionary]!
     
@@ -26,9 +25,17 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        searchBar.delegate = self
+        searchBar.barStyle = UIBarStyle.blackTranslucent
+
 
         MBProgressHUD.showAdded(to: self.view, animated: true)
         self.movieApiCall()
+        
+        let refreshControl = UIRefreshControl()
+        collectionView.insertSubview(refreshControl, at: 0)
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         
 
         // Do any additional setup after loading the view.
@@ -51,14 +58,11 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                 if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
                     
                     MBProgressHUD.hide(for: self.view, animated:true)
-                
+           
                     
                     self.movies = dataDictionary["results"] as? [NSDictionary]
-                    
-                    self.filteredMovies = movieTitles["titles"] as? [String]
-                    
-                    
-                    
+                    self.filteredMovies = self.movies
+        
                     self.collectionView.reloadData()
                     //self.networkErrorView.isHidden = true
                 }
@@ -74,51 +78,82 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     func refreshControlAction(_ refreshControl: UIRefreshControl){
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
-        collectionView.insertSubview(refreshControl, at: 0)
-        
         self.movieApiCall()
         refreshControl.endRefreshing()
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let movies = movies{
+        if let filteredMovies = filteredMovies{
+            return filteredMovies.count
+        }else if let movies = movies{
             return movies.count
         }else{
             return 0
         }
-        
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell" , for: indexPath as IndexPath) as! CollectionViewCell
        
-        print(indexPath)
-        let movie = movies![indexPath.row]
+        let movie: NSDictionary
+        
+        if (searchBar.text != "") {
+            movie = filteredMovies![indexPath.row]
+        }else{
+            movie = movies![indexPath.row]
+        }
+        
+        
+        //let movie = filteredMovies![indexPath.row]
         let posterPath = movie["poster_path"] as! String
-        //print(posterPath)
         
         let baseUrl = "https://image.tmdb.org/t/p/w500"
-        let imageUrl = NSURL(string: baseUrl + posterPath)
+        let imageUrl = NSURLRequest(url: NSURL(string: baseUrl + posterPath) as! URL)
         
-        cell.photoViewCell.setImageWith(imageUrl as! URL)
-        
-        
+        cell.photoViewCell.setImageWith(imageUrl as URLRequest, placeholderImage: nil, success: { (imageRequest, imageResponse, image) in
+            
+            if imageResponse != nil {
+                print("Imag wwas not cached, fade in image")
+                cell.photoViewCell.alpha = 0.0
+                cell.photoViewCell.image = image
+                UIView.animate(withDuration: 0.3, animations: { () -> Void in cell.photoViewCell.alpha = 1.0
+                })
+            }else{
+                print("Image was not cached so just update the image")
+                cell.photoViewCell.image = image
+            }
+    
+        }) { (imageRequest, imageResponse, error) in
+            print(error)
+        }
         return cell
-        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
         
-//        filteredMovies = searchText.isEmpty ? movies : movies.filter({(dataString: String) -> Bool in
-//            // If dataItem matches the searchText, return true to include it
-//            return dataDictionary.range(of: searchText, options: .caseInsensitive) != nil
-//        })
-//        collectionView.reloadData()
+        filteredMovies = searchText.isEmpty ? movies : movies!.filter({(movie: NSDictionary) -> Bool in
+            // If dataItem matches the searchText, return true to include it
+            return (movie["title"] as! String).range(of: searchText, options: .caseInsensitive) != nil
+        })
+        collectionView.reloadData()
     }
-
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        self.collectionView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.resignFirstResponder()
+    }
     
 
     /*
