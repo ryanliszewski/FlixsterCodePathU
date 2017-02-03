@@ -10,19 +10,23 @@ import UIKit
 import MBProgressHUD
 import AFNetworking
 
-class MovieCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class MovieCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var searchBar: UISearchBar!
+
+    
     var movies: [NSDictionary]?
+    var filteredMovies: [NSDictionary]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-        
+
         MBProgressHUD.showAdded(to: self.view, animated: true)
         self.movieApiCall()
         
@@ -47,9 +51,14 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                 if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
                     
                     MBProgressHUD.hide(for: self.view, animated:true)
-                    print(dataDictionary)
+                
                     
                     self.movies = dataDictionary["results"] as? [NSDictionary]
+                    
+                    self.filteredMovies = movieTitles["titles"] as? [String]
+                    
+                    
+                    
                     self.collectionView.reloadData()
                     //self.networkErrorView.isHidden = true
                 }
@@ -74,19 +83,22 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let movies = movies {
+        if let movies = movies{
             return movies.count
         }else{
-            return 0;
+            return 0
         }
+        
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell" , for: indexPath as IndexPath) as! CollectionViewCell
-        
+       
+        print(indexPath)
         let movie = movies![indexPath.row]
         let posterPath = movie["poster_path"] as! String
+        //print(posterPath)
         
         let baseUrl = "https://image.tmdb.org/t/p/w500"
         let imageUrl = NSURL(string: baseUrl + posterPath)
@@ -97,6 +109,17 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         return cell
         
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+        
+//        filteredMovies = searchText.isEmpty ? movies : movies.filter({(dataString: String) -> Bool in
+//            // If dataItem matches the searchText, return true to include it
+//            return dataDictionary.range(of: searchText, options: .caseInsensitive) != nil
+//        })
+//        collectionView.reloadData()
+    }
+
+    
 
     /*
     // MARK: - Navigation
