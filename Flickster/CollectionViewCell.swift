@@ -12,6 +12,7 @@ class CollectionViewCell: UICollectionViewCell {
     
     
     @IBOutlet weak var photoViewCell: UIImageView!
-  
-    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var shareIconImageView: UIImageView!
+    @IBOutlet weak var favoriteIconImageView: UIImageView!
 }

@@ -29,12 +29,12 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         searchBar.delegate = self
         searchBar.barStyle = UIBarStyle.blackTranslucent
-
+        searchBar.placeholder = "Search for Movies in Theatres"
+        
+        
         networkErrorView.isHidden = true
-
-        let refreshControl = UIRefreshControl()
-        collectionView.insertSubview(refreshControl, at: 0)
-        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        
+       
         
         MBProgressHUD.showAdded(to: self.view, animated: true)
         self.movieApiCall()
@@ -105,6 +105,14 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell" , for: indexPath as IndexPath) as! CollectionViewCell
        
+        cell.shareIconImageView.image = #imageLiteral(resourceName: "shareIcon")
+        cell.favoriteIconImageView.image = #imageLiteral(resourceName: "favoriteIcon")
+        
+        
+        
+        
+        
+        
         let movie: NSDictionary
         
         if (searchBar.text != "") {
@@ -113,9 +121,10 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
             movie = movies![indexPath.row]
         }
         
-        
-        //let movie = filteredMovies![indexPath.row]
         let posterPath = movie["poster_path"] as! String
+        //let title = movie["title"] as! String
+        //cell.titleLabel.text = title
+        
         
         let baseUrl = "https://image.tmdb.org/t/p/w500"
         let imageUrl = NSURLRequest(url: NSURL(string: baseUrl + posterPath) as! URL)
@@ -163,6 +172,8 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
     }
+    
+    
     
 
     /*
