@@ -43,6 +43,16 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     var movies: [NSDictionary]?
     var filteredMovies: [NSDictionary]!
     
+    /**
+        Initializes the collectionview
+     
+        ##Important Notes##
+        1. Initializes refresh control
+        2. Hides the network error view
+        3. Displays the MBProgreeHUD
+        4. Calls movieApiCall()
+     
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -63,7 +73,16 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         MBProgressHUD.showAdded(to: self.view, animated: true)
         self.movieApiCall()
     }
-
+    
+    /**
+        Makes an API call to get a dictionary of Movies.
+     
+        ## Important Notes ##
+        1. Calls the Movie Database - https://developers.themoviedb.org/3/getting-started
+        2. Hides the MBProdress Hud
+        3. Calls networkError() if the API call fails
+     
+    */
     func movieApiCall() -> Void {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
@@ -90,19 +109,45 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         task.resume()
     }
     
+    /**
+        Called when the user pulls down on the view. 
+     
+        ## Important Notes ##
+        1. Shows the refresh progress indicator
+        2. Calls the movieApiCall()
+        3. Hides the refresh progress indicator
+    
+    */
     func refreshControlAction(_ refreshControl: UIRefreshControl){
         self.movieApiCall()
         refreshControl.endRefreshing()
     }
     
-    ///Called if it there is no network error
+    /**
+        Called when there is a network error and the API call fails.
+     
+        ## Important Notes ##
+        1. Displays the network error label
+        2. Hides the search bar
+    
+    */
     func networkError() -> Void{
         networkErrorLabel.layer.masksToBounds = true
         networkErrorLabel.layer.cornerRadius = 5
         self.searchBar.isHidden = true
         self.networkErrorView.isHidden = false
+        MBProgressHUD.hide(for: self.view, animated:true)
     }
     
+    /**
+        
+        Sets the number of collection view cells in the collection view.
+        
+        ## Important Notes ##
+        1. Returns the size of a movie dictionary
+        2. Either all of them or a filterned one
+    
+    */
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let filteredMovies = filteredMovies{
             return filteredMovies.count
@@ -112,17 +157,21 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
             return 0
         }
     }
-    /**
-     
     
- 
+    /**
+        
+        Initializes a collectionviewcell and populates it with a move.
+     
+        ##Important Notes##
+        1.  Initilizes the cosmosView https://github.com/marketplacer/Cosmos
+        2.  Adds the rating to the cosmoview with 1-5 star rating
+        3.  Populates the cell with the movie's image
+        4.  Fades in images when theyre first loaded.
+
     */
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell" , for: indexPath as IndexPath) as! CollectionViewCell
        
-        cell.shareIconImageView.alpha = 0.2
-        
-        cell.shareIconImageView.image = #imageLiteral(resourceName: "shareIcon")
         cell.favoriteIconImageView.image = #imageLiteral(resourceName: "favoriteIcon")
         
         cell.cosmosView.settings.updateOnTouch = false
@@ -145,13 +194,11 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         cell.photoViewCell.setImageWith(imageUrl as URLRequest, placeholderImage: nil, success: { (imageRequest, imageResponse, image) in
             if imageResponse != nil {
-                print("Imag wwas not cached, fade in image")
                 cell.photoViewCell.alpha = 0.0
                 cell.photoViewCell.image = image
                 UIView.animate(withDuration: 0.3, animations: { () -> Void in cell.photoViewCell.alpha = 1.0
                 })
             } else {
-                print("Image was not cached so just update the image")
                 cell.photoViewCell.image = image
             }
     
@@ -161,7 +208,14 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         return cell
     }
     
-    ///Filter's the movies by their respective title when text is entered in the search bar.
+    /**
+        
+        Filter's the movies by their respective title when text is entered in the search bar.
+            
+        ## Important Notes ##
+        1. Called when the user enters text in the search bar 
+        2. Filters through the movie dictionary by title
+    */
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
         filteredMovies = searchText.isEmpty ? movies : movies!.filter({(movie: NSDictionary) -> Bool in
             // If dataItem matches the searchText, return true to include it
@@ -170,12 +224,26 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         collectionView.reloadData()
     }
     
-    //Called when text begins to entered. Displays cancel bar
+    /**
+        Displays Cancel button on search bar.
+        
+     ## Important Notes ##
+        1.Displays when user clicks on search bar
+     
+    */
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.searchBar.showsCancelButton = true
     }
     
-    ///Dismisses the searchbar when the cancel button is pressed
+    
+    /**
+        Dismisses the searchbar when the cancel button is pressed.
+        
+        ## Important Notes ##
+        1. Reloads CollectionView Data
+        2. Resets the search bar first responder
+     
+    */
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         searchBar.text = ""
@@ -183,7 +251,13 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         self.collectionView.reloadData()
     }
     
-    ///Begins search when searchbar button is clicked
+    /**
+        Called when the search bar is clicked. 
+     
+        ## Important Notes ##
+        1. Initializes searchbar first responder
+    
+    */
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
