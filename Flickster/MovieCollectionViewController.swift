@@ -9,6 +9,7 @@
 import UIKit
 import MBProgressHUD
 import AFNetworking
+import Cosmos
 
 class MovieCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
 
@@ -33,6 +34,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         
         networkErrorView.isHidden = true
+        
         
        
         
@@ -105,10 +107,14 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell" , for: indexPath as IndexPath) as! CollectionViewCell
        
+        cell.shareIconImageView.alpha = 0.2
+        
         cell.shareIconImageView.image = #imageLiteral(resourceName: "shareIcon")
         cell.favoriteIconImageView.image = #imageLiteral(resourceName: "favoriteIcon")
         
         
+        cell.cosmosView.settings.updateOnTouch = false
+        cell.cosmosView.settings.fillMode = .precise
         
         
         
@@ -121,9 +127,22 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
             movie = movies![indexPath.row]
         }
         
+        let rating = movie["vote_average"] as! Double
+        cell.cosmosView.rating = rating / 2
+        
+        
+        
+        
+        
+        
         let posterPath = movie["poster_path"] as! String
-        //let title = movie["title"] as! String
-        //cell.titleLabel.text = title
+        
+        
+        
+        
+        
+        
+        
         
         
         let baseUrl = "https://image.tmdb.org/t/p/w500"

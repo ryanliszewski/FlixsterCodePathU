@@ -7,6 +7,7 @@ target 'Flickster' do
 
   pod 'AFNetworking'
   pod ‘MBProgressHUD’
+  pod ‘Cosmos’, '~> 8.0'
 
   # Pods for Flickster
 

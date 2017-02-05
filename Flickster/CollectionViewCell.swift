@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Cosmos
+
 
 class CollectionViewCell: UICollectionViewCell {
     
     
+    @IBOutlet var cosmosView: CosmosView!
     @IBOutlet weak var photoViewCell: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var shareIconImageView: UIImageView!
