@@ -22,8 +22,8 @@
     * MovieCollectionViewController.Swift
     *
     * This is the CollectionViewController for the Flickster App. It makes an
-    * API call to the movie database (https://developers.themoviedb.org/3/getting-started)
-    * and populates the collection view with umovies in theatre's images, and rating
+    * API call to the movie database (https://developers.themoviedb.org/3/getting*-started)
+gitand populates the collection view with umovies in theatre's images, and rating
     * displayed as 5 stars using the UIControl Cosomos. (https://github.com/marketplacer/Cosmos)
     *
     */
