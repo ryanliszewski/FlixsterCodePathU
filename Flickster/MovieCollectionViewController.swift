@@ -188,6 +188,8 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         let rating = movie["vote_average"] as! Double
         cell.cosmosView.rating = rating / 2
         
+        
+        
         let posterPath = movie["poster_path"] as! String
         let baseUrl = "https://image.tmdb.org/t/p/w500"
         let imageUrl = NSURLRequest(url: NSURL(string: baseUrl + posterPath) as! URL)
@@ -263,6 +265,19 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let movie: NSDictionary
+        
+        let cell = sender as! UICollectionViewCell
+        let indexPath = collectionView.indexPath(for: cell)
+        if let filteredMovies = filteredMovies {
+            movie = filteredMovies[indexPath!.row]
+        } else {
+            movie = movies![indexPath!.row]
+        }
+        
+        let detailViewController = segue.destination as! DetailViewController
+        detailViewController.movie = movie
         print("Test")
     }
 }
