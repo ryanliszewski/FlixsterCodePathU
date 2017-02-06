@@ -235,7 +235,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         self.searchBar.showsCancelButton = true
     }
     
-    
     /**
         Dismisses the searchbar when the cancel button is pressed.
         
@@ -261,5 +260,9 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("Test")
     }
 }
