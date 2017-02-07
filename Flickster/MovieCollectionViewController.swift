@@ -33,12 +33,17 @@ import MBProgressHUD
 import AFNetworking
 import Cosmos
 
-class MovieCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
+class MovieCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, UISearchControllerDelegate
+{
+    
+    @IBOutlet weak var navigationBar: UINavigationItem!
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var networkErrorView: UIView!
     @IBOutlet weak var networkErrorLabel: UILabel!
+    
+    var searchController : UISearchController!
     
     
     
@@ -63,21 +68,35 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         collectionView.delegate = self
         collectionView.dataSource = self
         
-    
+
+        self.searchController = UISearchController(searchResultsController:  nil)
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        self.searchController.dimsBackgroundDuringPresentation = true
+        self.searchController.searchBar.delegate = self
+        self.searchController.searchBar.placeholder = "Search For Movies"
+        self.searchController.searchBar.searchBarStyle = .minimal
+        
+        let frame = CGRect(x: 0, y: 0, width: 300, height: 44)
+        let titleView = UIView(frame: frame)
+        searchController.searchBar.backgroundImage = UIImage()
+        searchController.searchBar.frame = frame
+        titleView.addSubview(searchController.searchBar)
+        navigationItem.titleView = titleView
+        
+
+        //self.navigationItem.titleView = searchController.searchBar
+        
+        
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         
         collectionView.insertSubview(refreshControl, at: 0)
-        
-        searchBar.delegate = self
-        searchBar.barStyle = UIBarStyle.blackTranslucent
-        searchBar.placeholder = "Search for Movies in Theatres"
-        
-        
+
         networkErrorView.isHidden = true
         
         MBProgressHUD.showAdded(to: self.view, animated: true)
+        
         self.movieApiCall()
     }
     
@@ -107,7 +126,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                     
                     self.collectionView.reloadData()
                     self.networkErrorView.isHidden = true
-                    self.searchBar.isHidden = false
+                    //self.searchBar.isHidden = false
                     
                     MBProgressHUD.hide(for: self.view, animated:true)
                     self.refreshControl.endRefreshing()
@@ -145,7 +164,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     func networkError() -> Void{
         networkErrorLabel.layer.masksToBounds = true
         networkErrorLabel.layer.cornerRadius = 5
-        self.searchBar.isHidden = true
+        //self.searchBar.isHidden = true
         self.networkErrorView.isHidden = false
         MBProgressHUD.hide(for: self.view, animated:true)
     }
@@ -190,7 +209,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         let movie: NSDictionary
         
-        if (searchBar.text != "") {
+        if (searchController.searchBar.text != "") {
             movie = filteredMovies![indexPath.row]
         }else{
             movie = movies![indexPath.row]
@@ -267,7 +286,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
      
     */
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.searchBar.showsCancelButton = true
+        searchController.searchBar.showsCancelButton = true
     }
     
     /**
@@ -279,9 +298,9 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
      
     */
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.showsCancelButton = false
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
+        searchController.searchBar.showsCancelButton = false
+        searchController.searchBar.text = ""
+        searchController.searchBar.resignFirstResponder()
         self.collectionView.reloadData()
     }
     
@@ -313,4 +332,15 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         detailViewController.movie = movie
         print("Test")
     }
+    
+    
+//    func handlesSwipe(sender: UISwipeGestureRecognizer)
+//    {
+//        if sender.direction = right{
+//            let storyBoard = UIStoryboard(name:"Main", bundle: nil)
+//            let vc = storyBoard.instantiateViewController(withIdentifier: "MoviesNavigationController") as! UINavigationController
+//            self.presente
+//        }
+//    }
+    
 }

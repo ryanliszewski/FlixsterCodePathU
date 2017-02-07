@@ -17,11 +17,18 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var movieInfoView: UIView!
     
     
+    
+    
     var movie: NSDictionary!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "shareIcon"), style: .plain, target: self, action:#selector(DetailViewController.backButtonTapped))
+    
+        backButton.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        
+        self.navigationItem.leftBarButtonItem = backButton
         
         let title = movie["title"] as? String
         titleLabel.text = title
@@ -37,8 +44,6 @@ class DetailViewController: UIViewController {
         let largeImageUrl = "https://image.tmdb.org/t/p/original"
         
       
-        
-        
         if let posterPath = movie["poster_path"] as? String {
             let smallImageRequest = NSURLRequest(url: NSURL(string: smallImageUrl + posterPath) as! URL)
             let largeImageRequest = NSURLRequest(url: NSURL(string: largeImageUrl + posterPath) as! URL)
@@ -85,6 +90,11 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func backButtonTapped(){
+        self.navigationController?.popViewController(animated: true)
+        
+    }
 
     /*
     // MARK: - Navigation
