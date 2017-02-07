@@ -40,8 +40,12 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     @IBOutlet weak var networkErrorView: UIView!
     @IBOutlet weak var networkErrorLabel: UILabel!
     
+    
+    
     var movies: [NSDictionary]?
     var filteredMovies: [NSDictionary]!
+    var endpoint: String!
+    var refreshControl: UIRefreshControl!
     
     /**
         Initializes the collectionview
@@ -59,7 +63,9 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        let refreshControl = UIRefreshControl()
+    
+        
+        refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         
         collectionView.insertSubview(refreshControl, at: 0)
@@ -67,6 +73,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         searchBar.delegate = self
         searchBar.barStyle = UIBarStyle.blackTranslucent
         searchBar.placeholder = "Search for Movies in Theatres"
+        
         
         networkErrorView.isHidden = true
         
@@ -85,7 +92,8 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     */
     func movieApiCall() -> Void {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)")!
+        
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         
@@ -100,6 +108,10 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                     self.collectionView.reloadData()
                     self.networkErrorView.isHidden = true
                     self.searchBar.isHidden = false
+                    
+                    MBProgressHUD.hide(for: self.view, animated:true)
+                    self.refreshControl.endRefreshing()
+                    
                 }
             } else {
                 self.networkError()
@@ -120,7 +132,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     */
     func refreshControlAction(_ refreshControl: UIRefreshControl){
         self.movieApiCall()
-        refreshControl.endRefreshing()
     }
     
     /**
@@ -191,22 +202,44 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         
         let posterPath = movie["poster_path"] as! String
-        let baseUrl = "https://image.tmdb.org/t/p/w500"
-        let imageUrl = NSURLRequest(url: NSURL(string: baseUrl + posterPath) as! URL)
         
-        cell.photoViewCell.setImageWith(imageUrl as URLRequest, placeholderImage: nil, success: { (imageRequest, imageResponse, image) in
-            if imageResponse != nil {
+        
+        let smallImageUrl = "https://image.tmdb.org/t/p/w45"
+        let largeImageUrl = "https://image.tmdb.org/t/p/original"
+        
+        let smallImageRequest = NSURLRequest(url: NSURL(string: smallImageUrl + posterPath) as! URL)
+        let largeImageRequest = NSURLRequest(url: NSURL(string: largeImageUrl + posterPath) as! URL)
+        
+        cell.photoViewCell.setImageWith(smallImageRequest as URLRequest, placeholderImage: nil, success: { (smallImageRequest, smallImageResponse, smallImage) in
+            
+            if smallImageResponse != nil {
                 cell.photoViewCell.alpha = 0.0
-                cell.photoViewCell.image = image
-                UIView.animate(withDuration: 0.3, animations: { () -> Void in cell.photoViewCell.alpha = 1.0
+                cell.photoViewCell.image = smallImage
+                
+                UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                    
+                    cell.photoViewCell.alpha = 1.0
+                    
+                }, completion: { (sucess) -> Void in
+                    
+                    
+                    cell.photoViewCell.setImageWith(largeImageRequest as URLRequest, placeholderImage: smallImage, success: {(largeImageRequest, largeImageResponse, largeImage) -> Void in
+                        
+                        cell.photoViewCell.image = largeImage
+                        
+                    },
+                        
+                        failure: { (request, response, error) -> Void in
+                            //add default image
+                    })
                 })
             } else {
-                cell.photoViewCell.image = image
+                cell.photoViewCell.image = smallImage
             }
     
-        }) { (imageRequest, imageResponse, error) in
+        }, failure: { (imageRequest, imageResponse, error) in
             print(error)
-        }
+        })
         return cell
     }
     
