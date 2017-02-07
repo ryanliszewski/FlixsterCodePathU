@@ -33,8 +33,6 @@ The following **additional** features are implemented:
 - [x] Displayed the calculated rating using the Cosomos pod. Modified the cosomos pod so the rating can't be change, modified the color and appearce of the stars, and change the stars setting's so they display a precise rating.'
 
 
-Added UI control cosmos that displays a 5 star rating of each of the movies from the Movie Datavase API
-
 - [x] List anything else that you can get done to improve the app functionality!
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
