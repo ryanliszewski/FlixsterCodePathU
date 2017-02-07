@@ -20,9 +20,20 @@ The following **optional** features are implemented:
 - [x] User can search for a movie.
 - [x] All images fade in as they are loading.
 - [x] Customize the UI.
-
+    - [x] Added an image assest for an icon to favorite a movie
+    - [x] Added a rating bar the pod "Cosmos" that displays the rating of each movie out of five stars 
+    - [x] Modified the third party pod "Cosomos" to not allow the user to change the rating, the appearce of the
+        the stars, the color of the stars and how percise the stars are. 
+    
 The following **additional** features are implemented:
-- [x]  Added UI control cosmos that displays a 5 star rating of each of the movies from the Movie Datavase API
+- [x] Added the Cocoa pod "Cosmos"
+- [x] Added an icon as an image asset to favorite a movie 
+- [x] Calculated a 5 star rating of each movie by retrieving "vote_average" from the Movie Database API and    
+        dividing the api's rating by 2.
+- [x] Displayed the calculated rating using the Cosomos pod. Modified the cosomos pod so the rating can't be change, modified the color and appearce of the stars, and change the stars setting's so they display a precise rating.'
+
+
+Added UI control cosmos that displays a 5 star rating of each of the movies from the Movie Datavase API
 
 - [x] List anything else that you can get done to improve the app functionality!
 
@@ -70,12 +81,12 @@ Time spent: **X** hours spent in total
 The following **required** functionality is completed:
 
 - [x] User can view movie details by tapping on a cell.
-- [ ] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
-- [ ] Customize the selection effect of the cell.
+- [x] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
+- [x] Customize the selection effect of the cell.
 
 The following **optional** features are implemented:
 
-- [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
+- [x] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
 - [ ] Customize the navigation bar.
 
 The following **additional** features are implemented:
