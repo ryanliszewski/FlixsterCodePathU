@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MapKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, CLLocationManagerDelegate{
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -16,13 +17,25 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var movieInfoView: UIView!
     
+    var endpoint: String! 
+    
     
     
     
     var movie: NSDictionary!
     
+    var locationManager: CLLocationManager?
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.requestWhenInUseAuthorization()
+        locationManager?.startUpdatingLocation()
+    
+        
         
         let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "shareIcon"), style: .plain, target: self, action:#selector(DetailViewController.backButtonTapped))
     
@@ -43,7 +56,7 @@ class DetailViewController: UIViewController {
         let smallImageUrl = "https://image.tmdb.org/t/p/w45"
         let largeImageUrl = "https://image.tmdb.org/t/p/original"
         
-      
+        
         if let posterPath = movie["poster_path"] as? String {
             let smallImageRequest = NSURLRequest(url: NSURL(string: smallImageUrl + posterPath) as! URL)
             let largeImageRequest = NSURLRequest(url: NSURL(string: largeImageUrl + posterPath) as! URL)
@@ -95,6 +108,8 @@ class DetailViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
         
     }
+    
+
 
     /*
     // MARK: - Navigation
