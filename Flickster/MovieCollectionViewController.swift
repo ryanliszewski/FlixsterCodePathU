@@ -33,8 +33,10 @@ import MBProgressHUD
 import AFNetworking
 import Cosmos
 import MapKit
+import SKSplashView
+   
 
-class MovieCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, CLLocationManagerDelegate, UICollectionViewDelegateFlowLayout {
+class MovieCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, CLLocationManagerDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate{
     
     @IBOutlet weak var navigationBar: UINavigationItem!
 
@@ -49,7 +51,12 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     var lat: Double!
     
     
-    var movies: [NSDictionary]?
+    var currentPageNumber = 1
+    
+    
+    var isMoreDataLoading = false
+    
+    var movies: [NSDictionary]!
     var filteredMovies: [NSDictionary]!
     var endpoint: String!
     var refreshControl: UIRefreshControl!
@@ -68,7 +75,8 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        let test = true
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -78,7 +86,14 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 3, bottom: 40, right: 3)
-        layout.itemSize = CGSize(width: screenWidth / 2 - 5, height: screenHeight / 2 - 5)
+        
+        if(test){
+            layout.itemSize = CGSize(width: screenWidth - 10, height: screenHeight / 1.5)
+        }else{
+            layout.itemSize = CGSize(width: screenWidth / 2 - 5, height: screenHeight / 3)
+        }
+        
+        
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 4
         //collectionView!.collectionViewLayout = layout
@@ -88,32 +103,21 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         self.tabBarController?.tabBar.isTranslucent = true
         self.tabBarController?.tabBar.frame = CGRect(x: 0, y: 627, width: collectionView.frame.size.width, height: 40)
         
+//        
+//        
+//        locationManager.delegate = self
+//        locationManager.requestAlwaysAuthorization()
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.startUpdatingLocation()
         
-        
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-        
-        
-//        if CLLocationManager.locationServicesEnabled() {
-//            locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//            locationManager.startUpdatingLocation()
-//        }
-        
-//        if CLLocationManager.authorizationStatus() == .denied {
-//            self.locationManager.requestWhenInUseAuthorization()
-//        }
-        
-        
-
+    
         self.searchController = UISearchController(searchResultsController:  nil)
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = true
         self.searchController.searchBar.delegate = self
         self.searchController.searchBar.placeholder = "Search For Movies"
         self.searchController.searchBar.searchBarStyle = .minimal
+        self.searchController.searchBar.showsCancelButton = true
         
         
         let frame = CGRect(x: 0, y: 0, width: 300, height: 44)
@@ -138,6 +142,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         self.movieApiCall()
     }
+
     
     /**
         Makes an API call to get a dictionary of Movies.
@@ -154,8 +159,9 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     }
     
     func movieApiCall() -> Void {
+        
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)&page=\(currentPageNumber)")!
         
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
@@ -165,13 +171,16 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                 if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
                     MBProgressHUD.hide(for: self.view, animated:true)
            
+                    
                     self.movies = dataDictionary["results"] as? [NSDictionary]
+                    
                     self.filteredMovies = self.movies
                     
                     self.collectionView.reloadData()
                     self.networkErrorView.isHidden = true
                     //self.searchBar.isHidden = false
                     
+                   
                     MBProgressHUD.hide(for: self.view, animated:true)
                     self.refreshControl.endRefreshing()
                     
@@ -184,6 +193,9 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         task.resume()
     }
     
+    
+    
+    
     /**
         Called when the user pulls down on the view. 
      
@@ -194,6 +206,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     */
     func refreshControlAction(_ refreshControl: UIRefreshControl){
+        currentPageNumber = 1
         self.movieApiCall()
     }
     
@@ -252,8 +265,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell" , for: indexPath as IndexPath) as! CollectionViewCell
        
-        
-        
         cell.favoriteIconImageView.image = #imageLiteral(resourceName: "favoriteIcon")
         
         cell.cosmosView.settings.updateOnTouch = false
@@ -271,35 +282,30 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         cell.cosmosView.rating = rating / 2
         
         
-        
-        let posterPath = movie["poster_path"] as! String
-        
-        
-        //let smallImageUrl = "https://image.tmdb.org/t/p/w45"
-        let largeImageUrl = "https://image.tmdb.org/t/p/original"
-        
-        //let smallImageRequest = NSURLRequest(url: NSURL(string: smallImageUrl + posterPath) as! URL)
-        let largeImageRequest = NSURLRequest(url: NSURL(string: largeImageUrl + posterPath) as! URL)
-        
-        cell.photoViewCell.setImageWith(largeImageRequest as URLRequest, placeholderImage: nil, success: { (largeImageRequest, largeImageResponse, largeImage) in
+        if let posterPath = movie["poster_path"] as? String {
+            let largeImageUrl = "https://image.tmdb.org/t/p/original"
+            let largeImageRequest = NSURLRequest(url: NSURL(string: largeImageUrl + posterPath) as! URL)
             
-            if largeImageResponse != nil {
-                cell.photoViewCell.alpha = 0.0
-                cell.photoViewCell.image = largeImage
+            cell.photoViewCell.setImageWith(largeImageRequest as URLRequest, placeholderImage: nil, success: { (largeImageRequest, largeImageResponse, largeImage) in
                 
-                UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                if largeImageResponse != nil {
+                    cell.photoViewCell.alpha = 0.0
+                    cell.photoViewCell.image = largeImage
                     
-                    cell.photoViewCell.alpha = 1.0
+                    UIView.animate(withDuration: 0.1, animations: { () -> Void in
+                        
+                        cell.photoViewCell.alpha = 1.0
+                        
+                    })
                     
-                })
-                    
-            } else {
-                cell.photoViewCell.image = largeImage
-            }
-            
-        }, failure: { (imageRequest, imageResponse, error) in
-            print(error)
-        })
+                } else {
+                    cell.photoViewCell.image = largeImage
+                }
+                
+            }, failure: { (imageRequest, imageResponse, error) in
+                print(error)
+            })
+        }
         return cell
     }
     
@@ -317,6 +323,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
             return (movie["title"] as! String).range(of: searchText, options: .caseInsensitive) != nil
         })
         collectionView.reloadData()
+        
     }
     
     /**
@@ -340,9 +347,11 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
      
     */
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("fuck")
         searchController.searchBar.showsCancelButton = false
         searchController.searchBar.text = ""
         searchController.searchBar.resignFirstResponder()
+        
         self.collectionView.reloadData()
     }
     
@@ -356,16 +365,9 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
+        
     }
     
-    
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        let userLocation:CLLocation = locations[0] as! CLLocation
-        long = userLocation.coordinate.longitude;
-        lat = userLocation.coordinate.latitude;
-        print("test")
-
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -384,14 +386,58 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if(!isMoreDataLoading){
+            let scrollViewContentHeight = collectionView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - collectionView.bounds.height
+            
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && collectionView.isDragging){
+                isMoreDataLoading = true
+                loadMoreData()
+            }
+            
+        }
+    }
     
-//    func handlesSwipe(sender: UISwipeGestureRecognizer)
-//    {
-//        if sender.direction = right{
-//            let storyBoard = UIStoryboard(name:"Main", bundle: nil)
-//            let vc = storyBoard.instantiateViewController(withIdentifier: "MoviesNavigationController") as! UINavigationController
-//            self.presente
-//        }
-//    }
+    func loadMoreData(){
+        currentPageNumber += 1
+        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)&page=\(currentPageNumber)")!
+        
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
+        
+        let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+            if let data = data {
+                if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
+                    MBProgressHUD.hide(for: self.view, animated:true)
+                    
+                    
+                    
+                    let newMovies = dataDictionary["results"] as! [NSDictionary]
+                    
+                    self.movies?.append(contentsOf: newMovies)
+                    
+                    self.filteredMovies = self.movies
+                    
+                    self.collectionView.reloadData()
+                    self.networkErrorView.isHidden = true
+                    //self.searchBar.isHidden = false
+                    
+                    print(dataDictionary)
+                    
+                    MBProgressHUD.hide(for: self.view, animated:true)
+                    self.refreshControl.endRefreshing()
+                    
+                }
+            } else {
+                self.networkError()
+                self.movieApiCall()
+            }
+        }
+        isMoreDataLoading = false
+        task.resume()
+    }
     
 }
+   
