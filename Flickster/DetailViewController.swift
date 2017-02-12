@@ -18,11 +18,10 @@ class DetailViewController: UIViewController, CLLocationManagerDelegate{
     @IBOutlet weak var movieInfoView: UIView!
     
     var endpoint: String! 
-    
-    
-    
-    
+        
     var movie: NSDictionary!
+    
+    
     
     var locationManager: CLLocationManager?
 
@@ -37,11 +36,11 @@ class DetailViewController: UIViewController, CLLocationManagerDelegate{
     
         
         
-        let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "shareIcon"), style: .plain, target: self, action:#selector(DetailViewController.backButtonTapped))
+        //let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "shareIcon"), style: .plain, target: self, action:#selector(DetailViewController.backButtonTapped))
     
-        backButton.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        //backButton.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         
-        self.navigationItem.leftBarButtonItem = backButton
+        //self.navigationItem.leftBarButtonItem = backButton
         
         let title = movie["title"] as? String
         titleLabel.text = title

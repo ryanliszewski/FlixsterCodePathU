@@ -11,6 +11,7 @@
 		7343FFCD1E43AF9C009D4D26 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7343FFCC1E43AF9C009D4D26 /* CollectionViewCell.swift */; };
 		7343FFCF1E43B046009D4D26 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7343FFCE1E43B046009D4D26 /* MovieCell.swift */; };
 		735AD52B1E431E230061E1B3 /* MovieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AD52A1E431E230061E1B3 /* MovieCollectionViewController.swift */; };
+		735FCDA91E4E077400521447 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735FCDA81E4E077400521447 /* SettingsViewController.swift */; };
 		73B72E2B1E3F03F800267E05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B72E2A1E3F03F800267E05 /* AppDelegate.swift */; };
 		73B72E301E3F03F800267E05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73B72E2E1E3F03F800267E05 /* Main.storyboard */; };
 		73B72E321E3F03F800267E05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73B72E311E3F03F800267E05 /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		7343FFCC1E43AF9C009D4D26 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		7343FFCE1E43B046009D4D26 /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieCell.swift; path = ../../../Desktop/MovieCell.swift; sourceTree = "<group>"; };
 		735AD52A1E431E230061E1B3 /* MovieCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewController.swift; sourceTree = "<group>"; };
+		735FCDA81E4E077400521447 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		73B72E271E3F03F700267E05 /* Flickster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flickster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73B72E2A1E3F03F800267E05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		73B72E2F1E3F03F800267E05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				73B72E3C1E3F093200267E05 /* MoviesViewController.swift */,
 				735AD52A1E431E230061E1B3 /* MovieCollectionViewController.swift */,
 				732FABD91E4855BC00A6CEA3 /* DetailViewController.swift */,
+				735FCDA81E4E077400521447 /* SettingsViewController.swift */,
 			);
 			name = "View Controller ";
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				73EC4D2C1E43B40A009353F6 /* NetworkErrorView.swift in Sources */,
 				73B72E3D1E3F093200267E05 /* MoviesViewController.swift in Sources */,
 				732FABDA1E4855BC00A6CEA3 /* DetailViewController.swift in Sources */,
+				735FCDA91E4E077400521447 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

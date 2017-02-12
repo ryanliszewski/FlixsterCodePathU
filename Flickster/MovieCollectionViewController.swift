@@ -41,7 +41,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     @IBOutlet weak var navigationBar: UINavigationItem!
 
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var networkErrorView: UIView!
     @IBOutlet weak var networkErrorLabel: UILabel!
     
@@ -63,6 +62,12 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     var locationManager = CLLocationManager()
     
+    var searchBar: UISearchBar = UISearchBar()
+    
+    
+    
+    
+    
     /**
         Initializes the collectionview
      
@@ -76,9 +81,10 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let test = true
+        let test = false
         collectionView.delegate = self
         collectionView.dataSource = self
+        searchBar.delegate = self
         
         let screenWidth = UIScreen.main.bounds.size.width
         let screenHeight = UIScreen.main.bounds.size.height
@@ -92,6 +98,15 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         }else{
             layout.itemSize = CGSize(width: screenWidth / 2 - 5, height: screenHeight / 3)
         }
+        
+        
+        let settingsButton = UIButton(type: .custom)
+        settingsButton.setImage(#imageLiteral(resourceName: "Image-2"), for: .normal)
+        settingsButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        settingsButton.addTarget(self, action: #selector(MovieCollectionViewController.settingsButtonClicked), for: .touchUpInside)
+        let leftBarButton = UIBarButtonItem(customView: settingsButton)
+        
+        //self.navigationItem.setLeftBarButton(leftBarButton, animated: true)
         
         
         layout.minimumInteritemSpacing = 0
@@ -111,23 +126,31 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
 //        locationManager.startUpdatingLocation()
         
     
-        self.searchController = UISearchController(searchResultsController:  nil)
-        self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.dimsBackgroundDuringPresentation = true
-        self.searchController.searchBar.delegate = self
-        self.searchController.searchBar.placeholder = "Search For Movies"
-        self.searchController.searchBar.searchBarStyle = .minimal
-        self.searchController.searchBar.showsCancelButton = true
+//        self.searchController = UISearchController(searchResultsController:  nil)
+//        self.searchController.hidesNavigationBarDuringPresentation = false
+//        self.searchController.dimsBackgroundDuringPresentation = true
+//        self.searchController.searchBar.delegate = self
+//        self.searchController.searchBar.placeholder = "Search For Movies"
+//        self.searchController.searchBar.searchBarStyle = .minimal
         
+        self.navigationItem.titleView = searchBar
+        self.searchBar.searchBarStyle = .minimal
         
-        let frame = CGRect(x: 0, y: 0, width: 300, height: 44)
-        let titleView = UIView(frame: frame)
-        searchController.searchBar.backgroundImage = UIImage()
-        searchController.searchBar.frame = frame
-        titleView.addSubview(searchController.searchBar)
-        navigationItem.titleView = titleView
+//        let frame = CGRect(x: 0, y: 0, width: 300, height: 44)
+//        let titleView = UIView(frame: frame)
+//        searchController.searchBar.backgroundImage = UIImage()
+//        searchController.searchBar.frame = frame
+//        titleView.addSubview(searchController.searchBar)
+//        navigationItem.titleView = titleView
         
         self.extendedLayoutIncludesOpaqueBars = true
+        
+        
+       
+        
+        
+        //self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "Image-2")
+        //self.navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         
 
         
@@ -154,6 +177,11 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
      
     */
     
+    func settingsButtonClicked(){
+        
+        self.performSegue(withIdentifier: "settings", sender: self)
+        
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
     }
@@ -238,13 +266,15 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let filteredMovies = filteredMovies{
-            return filteredMovies.count
-        }else if let movies = movies{
-            return movies.count
-        }else{
-            return 0
+        
+        if let filteredMovies = filteredMovies, let movies = movies{
+            if movies.count > filteredMovies.count{
+                return filteredMovies.count
+            }else if movies.count <= filteredMovies.count{
+                return movies.count
+            }
         }
+       return 0
     }
     
 
@@ -272,7 +302,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         let movie: NSDictionary
         
-        if (searchController.searchBar.text != "") {
+        if (self.searchBar.text != "") {
             movie = filteredMovies![indexPath.row]
         }else{
             movie = movies![indexPath.row]
@@ -334,7 +364,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
      
     */
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchController.searchBar.showsCancelButton = true
+        self.searchBar.showsCancelButton = true
         
     }
     
@@ -347,10 +377,10 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
      
     */
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print("fuck")
-        searchController.searchBar.showsCancelButton = false
-        searchController.searchBar.text = ""
-        searchController.searchBar.resignFirstResponder()
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        self.filteredMovies = movies
         
         self.collectionView.reloadData()
     }
@@ -367,7 +397,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         searchBar.resignFirstResponder()
         
     }
-    
+        
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
