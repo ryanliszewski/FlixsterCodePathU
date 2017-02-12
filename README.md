@@ -85,9 +85,16 @@ The following **required** functionality is completed:
 The following **optional** features are implemented:
 
 - [x] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
-- [ ] Customize the navigation bar.
+- [x] Customize the navigation bar.
+    - [x] Put the search bar in the navigation bar 
+    - [x] Added a settings button 
+    - [x] Customized color and look 
 
 The following **additional** features are implemented:
+- [x] Infinite scrolling for *Now Playing* and *Top Rated Movies*. The Movie Database only allows 20 movies per call so I implmented a functionality that calls the API again when the user scrolls and added the page parameter to the api call. 
+- [x] AutoLayout for *Now Playing* and *Top Rated Movies* views, the movie detail view and launch screen.
+- [x] App Icon and Launch screen 
+- [x] Customized cell size in collection view 
 
 - [ ] List anything else that you can get done to improve the app functionality!
 

@@ -65,9 +65,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     var searchBar: UISearchBar = UISearchBar()
     
     
-    
-    
-    
     /**
         Initializes the collectionview
      
@@ -117,7 +114,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         self.tabBarController?.tabBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         self.tabBarController?.tabBar.isTranslucent = true
         self.tabBarController?.tabBar.frame = CGRect(x: 0, y: 627, width: collectionView.frame.size.width, height: 40)
-        
+        self.tabBarController?.tabBar.backgroundColor = #colorLiteral(red: 0.843980968, green: 0.4811213613, blue: 0.2574525177, alpha: 1)
 //        
 //        
 //        locationManager.delegate = self
@@ -135,6 +132,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         self.navigationItem.titleView = searchBar
         self.searchBar.searchBarStyle = .minimal
+        self.searchBar.placeholder = "Search for Movies"
         
 //        let frame = CGRect(x: 0, y: 0, width: 300, height: 44)
 //        let titleView = UIView(frame: frame)
