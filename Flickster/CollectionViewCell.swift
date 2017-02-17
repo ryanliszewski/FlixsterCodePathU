@@ -30,9 +30,18 @@ import Cosmos
 
 class CollectionViewCell: UICollectionViewCell {
     
+
     
+    @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet var cosmosView: CosmosView!
     @IBOutlet weak var photoViewCell: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var favoriteIconImageView: UIImageView!
+    
+    var tapAction: ((UICollectionViewCell) -> Void)?
+    
+    
+    @IBAction func buttonTap(_ sender: Any) {
+        tapAction?(self)
+    }
 }

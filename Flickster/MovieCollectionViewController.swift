@@ -49,6 +49,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     var long: Double!
     var lat: Double!
     
+    let userDefults = UserDefaults.standard
     
     var currentPageNumber = 1
     
@@ -63,6 +64,9 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     var locationManager = CLLocationManager()
     
     var searchBar: UISearchBar = UISearchBar()
+    var favoriteCounts: Int!
+    
+    var favoriteMovies: [String: Any]!
     
     
     /**
@@ -101,7 +105,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         settingsButton.setImage(#imageLiteral(resourceName: "Image-2"), for: .normal)
         settingsButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         settingsButton.addTarget(self, action: #selector(MovieCollectionViewController.settingsButtonClicked), for: .touchUpInside)
-        let leftBarButton = UIBarButtonItem(customView: settingsButton)
         
         //self.navigationItem.setLeftBarButton(leftBarButton, animated: true)
         
@@ -198,7 +201,9 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                     MBProgressHUD.hide(for: self.view, animated:true)
            
                     
+                    
                     self.movies = dataDictionary["results"] as? [NSDictionary]
+                    print(self.movies!)
                     
                     self.filteredMovies = self.movies
                     
@@ -291,9 +296,10 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         
         
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell" , for: indexPath as IndexPath) as! CollectionViewCell
        
-        cell.favoriteIconImageView.image = #imageLiteral(resourceName: "favoriteIcon")
+        //cell.favoriteIconImageView.image = #imageLiteral(resourceName: "favoriteIcon")
         
         cell.cosmosView.settings.updateOnTouch = false
         cell.cosmosView.settings.fillMode = .precise
@@ -334,6 +340,19 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                 print(error)
             })
         }
+        
+        cell.tapAction = {(cell) in
+            print("FUCK YES")
+            
+            self.userDefults.set(movie, forKey: "FavoriteMovie")
+            self.userDefults.synchronize()
+            
+        
+            
+        }
+        
+        
+        
         return cell
     }
     
@@ -380,6 +399,11 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         searchBar.resignFirstResponder()
         self.filteredMovies = movies
         
+        //let test = userDefults.dictionary(forKey: "Rating")
+        
+      
+        print("test")
+        
         self.collectionView.reloadData()
     }
     
@@ -399,19 +423,23 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        let movie: NSDictionary
-        
-        let cell = sender as! UICollectionViewCell
-        let indexPath = collectionView.indexPath(for: cell)
-        if let filteredMovies = filteredMovies {
-            movie = filteredMovies[indexPath!.row]
-        } else {
-            movie = movies![indexPath!.row]
+        if segue.identifier == "MovieDetailViewSegue" {
+            let movie: NSDictionary
+            
+            let cell = sender as! UICollectionViewCell
+            let indexPath = collectionView.indexPath(for: cell)
+            if let filteredMovies = filteredMovies {
+                movie = filteredMovies[indexPath!.row]
+            } else {
+                movie = movies![indexPath!.row]
+            }
+            
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.movie = movie
+        } else if segue.identifier == "SettingsViewSegue" {
+            
         }
-        
-        let detailViewController = segue.destination as! DetailViewController
-        detailViewController.movie = movie
-    
+
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

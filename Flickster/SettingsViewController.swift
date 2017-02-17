@@ -12,6 +12,10 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        //self.navigationController?.navigationItem.backBarButtonItem?.isEnabled
 
         // Do any additional setup after loading the view.
     }

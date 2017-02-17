@@ -39,8 +39,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         topRatedNavigationController.tabBarItem.title = "top rated"
         
+        
+        
+        
+        let favoriteMovieNavigationController = storyBoard.instantiateViewController(withIdentifier: "FavoriteNavigationController") as! FavoriteMovieViewController
+        
+    
+        
+        //let favoriteMovieViewController = favoriteMovieNavigationController.topViewController as! FavoriteMovieViewController
+        
+        favoriteMovieNavigationController.tabBarItem.title = "favorite movie"
+        
+        
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [nowPlayingNavigationController, topRatedNavigationController]
+        tabBarController.viewControllers = [nowPlayingNavigationController, topRatedNavigationController, favoriteMovieNavigationController]
         
         
         window?.rootViewController = tabBarController

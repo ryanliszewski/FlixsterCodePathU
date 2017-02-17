@@ -29,10 +29,10 @@ class DetailViewController: UIViewController, CLLocationManagerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.requestWhenInUseAuthorization()
-        locationManager?.startUpdatingLocation()
+//        locationManager = CLLocationManager()
+//        locationManager?.delegate = self
+//        locationManager?.requestWhenInUseAuthorization()
+//        locationManager?.startUpdatingLocatio?()
     
         
         
