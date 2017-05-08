@@ -69,6 +69,8 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     var favoriteMovies: [String: Any]!
     
     
+    
+    
     /**
         Initializes the collectionview
      
@@ -146,7 +148,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         self.extendedLayoutIncludesOpaqueBars = true
         
-        
+
        
         
         

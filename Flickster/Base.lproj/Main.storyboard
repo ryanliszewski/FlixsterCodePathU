@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Lf1-Ph-9p2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Lf1-Ph-9p2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -30,7 +30,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="138"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zYb-3k-smn" id="lvq-Ef-srR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="137"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="137.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y9U-Hh-zqV">
@@ -233,11 +233,8 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Flickster" id="XYd-wB-TnX">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="Image-2" id="yyU-vX-t71">
-                            <color key="tintColor" red="0.59999999999999998" green="0.40000000000000002" blue="0.0" alpha="0.76276740771677853" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <segue destination="POZ-p5-6Wf" kind="show" identifier="SettingsViewSegue" action="showDetailViewController:sender:" id="Jur-Yk-0fR"/>
-                            </connections>
+                        <barButtonItem key="rightBarButtonItem" image="settings" id="iEz-Di-h3J">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -466,7 +463,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Image-2" width="44" height="44"/>
         <image name="favoriteIcon" width="44" height="44"/>
+        <image name="settings" width="21" height="21"/>
     </resources>
 </document>

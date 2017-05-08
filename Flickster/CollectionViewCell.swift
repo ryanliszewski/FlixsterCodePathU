@@ -30,8 +30,6 @@ import Cosmos
 
 class CollectionViewCell: UICollectionViewCell {
     
-
-    
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet var cosmosView: CosmosView!
     @IBOutlet weak var photoViewCell: UIImageView!

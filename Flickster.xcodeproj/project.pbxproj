@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		732FABDA1E4855BC00A6CEA3 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732FABD91E4855BC00A6CEA3 /* DetailViewController.swift */; };
 		7343FFCD1E43AF9C009D4D26 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7343FFCC1E43AF9C009D4D26 /* CollectionViewCell.swift */; };
-		7343FFCF1E43B046009D4D26 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7343FFCE1E43B046009D4D26 /* MovieCell.swift */; };
 		735AD52B1E431E230061E1B3 /* MovieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AD52A1E431E230061E1B3 /* MovieCollectionViewController.swift */; };
 		735FCDA91E4E077400521447 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735FCDA81E4E077400521447 /* SettingsViewController.swift */; };
 		73B72E2B1E3F03F800267E05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B72E2A1E3F03F800267E05 /* AppDelegate.swift */; };
@@ -29,7 +28,6 @@
 		732FABD91E4855BC00A6CEA3 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		732FABDB1E4AD71300A6CEA3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		7343FFCC1E43AF9C009D4D26 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
-		7343FFCE1E43B046009D4D26 /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieCell.swift; path = ../../../Desktop/MovieCell.swift; sourceTree = "<group>"; };
 		735AD52A1E431E230061E1B3 /* MovieCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewController.swift; sourceTree = "<group>"; };
 		735FCDA81E4E077400521447 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		73B72E271E3F03F700267E05 /* Flickster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flickster.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,7 +102,6 @@
 			isa = PBXGroup;
 			children = (
 				7343FFCC1E43AF9C009D4D26 /* CollectionViewCell.swift */,
-				7343FFCE1E43B046009D4D26 /* MovieCell.swift */,
 				73EC4D2B1E43B40A009353F6 /* NetworkErrorView.swift */,
 			);
 			name = Views;
@@ -262,7 +259,6 @@
 				73DE033E1E5579AD00EFF4BB /* FavoriteMovieViewController.swift in Sources */,
 				7343FFCD1E43AF9C009D4D26 /* CollectionViewCell.swift in Sources */,
 				73B72E2B1E3F03F800267E05 /* AppDelegate.swift in Sources */,
-				7343FFCF1E43B046009D4D26 /* MovieCell.swift in Sources */,
 				735AD52B1E431E230061E1B3 /* MovieCollectionViewController.swift in Sources */,
 				73EC4D2C1E43B40A009353F6 /* NetworkErrorView.swift in Sources */,
 				73B72E3D1E3F093200267E05 /* MoviesViewController.swift in Sources */,
