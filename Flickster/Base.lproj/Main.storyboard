@@ -372,7 +372,11 @@
                             <constraint firstItem="Qp3-9q-ZjQ" firstAttribute="bottom" secondItem="Pd0-3e-Rmv" secondAttribute="top" id="vcD-QX-hTB"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ZXj-PU-qKX"/>
+                    <navigationItem key="navigationItem" id="ZXj-PU-qKX">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="AgU-FF-OYP">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="movieInfoView" destination="Wba-RC-bak" id="njN-2d-u60"/>
                         <outlet property="overviewLabel" destination="aUB-bS-GPx" id="5y2-cA-7v5"/>
@@ -463,6 +467,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="back" width="21" height="21"/>
         <image name="favoriteIcon" width="44" height="44"/>
         <image name="settings" width="21" height="21"/>
     </resources>

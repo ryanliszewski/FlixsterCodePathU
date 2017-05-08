@@ -17,15 +17,10 @@ class DetailViewController: UIViewController, CLLocationManagerDelegate{
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var movieInfoView: UIView!
     
-    var endpoint: String! 
-        
+    var endpoint: String!
     var movie: NSDictionary!
-    
-    
-    
     var locationManager: CLLocationManager?
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -103,13 +98,6 @@ class DetailViewController: UIViewController, CLLocationManagerDelegate{
     }
     
     
-    func backButtonTapped(){
-        self.navigationController?.popViewController(animated: true)
-        
-    }
-    
-
-
     /*
     // MARK: - Navigation
 
