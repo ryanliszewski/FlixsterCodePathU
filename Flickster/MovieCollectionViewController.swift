@@ -34,6 +34,7 @@ import AFNetworking
 import Cosmos
 import MapKit
 import SKSplashView
+import BouncyLayout
    
 
 class MovieCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, CLLocationManagerDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate{
@@ -93,8 +94,15 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         let screenHeight = UIScreen.main.bounds.size.height
         
         
+        let bouncyLayout = BouncyLayout()
+        UICollectionView(frame: .zero, collectionViewLayout: bouncyLayout)
+        
+        
+        
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 3, bottom: 40, right: 3)
+        
+        
         
         if(test){
             layout.itemSize = CGSize(width: screenWidth - 10, height: screenHeight / 1.5)
@@ -108,54 +116,22 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         settingsButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         settingsButton.addTarget(self, action: #selector(MovieCollectionViewController.settingsButtonClicked), for: .touchUpInside)
         
-        //self.navigationItem.setLeftBarButton(leftBarButton, animated: true)
-        
-        
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 4
         //collectionView!.collectionViewLayout = layout
         collectionView.setCollectionViewLayout(layout, animated: true)
+        
+        
       
         self.tabBarController?.tabBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         self.tabBarController?.tabBar.isTranslucent = true
-        self.tabBarController?.tabBar.frame = CGRect(x: 0, y: 627, width: collectionView.frame.size.width, height: 40)
-        self.tabBarController?.tabBar.backgroundColor = #colorLiteral(red: 0.843980968, green: 0.4811213613, blue: 0.2574525177, alpha: 1)
-//        
-//        
-//        locationManager.delegate = self
-//        locationManager.requestAlwaysAuthorization()
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        locationManager.startUpdatingLocation()
-        
-    
-//        self.searchController = UISearchController(searchResultsController:  nil)
-//        self.searchController.hidesNavigationBarDuringPresentation = false
-//        self.searchController.dimsBackgroundDuringPresentation = true
-//        self.searchController.searchBar.delegate = self
-//        self.searchController.searchBar.placeholder = "Search For Movies"
-//        self.searchController.searchBar.searchBarStyle = .minimal
-        
+
+
         self.navigationItem.titleView = searchBar
         self.searchBar.searchBarStyle = .minimal
         self.searchBar.placeholder = "Search for Movies"
         
-//        let frame = CGRect(x: 0, y: 0, width: 300, height: 44)
-//        let titleView = UIView(frame: frame)
-//        searchController.searchBar.backgroundImage = UIImage()
-//        searchController.searchBar.frame = frame
-//        titleView.addSubview(searchController.searchBar)
-//        navigationItem.titleView = titleView
-        
         self.extendedLayoutIncludesOpaqueBars = true
-        
-
-       
-        
-        
-        //self.navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "Image-2")
-        //self.navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        
-
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
