@@ -96,7 +96,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="464" y="-1129.8350824587708"/>
+            <point key="canvasLocation" x="463" y="-711"/>
         </scene>
         <!--Flickster-->
         <scene sceneID="fNx-ba-XJ0">
@@ -182,30 +182,17 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2e6-Be-IrC">
                                                     <rect key="frame" x="0.0" y="0.0" width="177" height="216"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zxv-XU-JYz">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zxv-XU-JYz">
                                                     <rect key="frame" x="0.0" y="0.0" width="177" height="216"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sO-YC-lh8">
-                                                    <rect key="frame" x="149" y="218" width="20" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="PmT-I1-aDg"/>
-                                                        <constraint firstAttribute="width" constant="20" id="xXI-zb-obS"/>
-                                                    </constraints>
-                                                    <state key="normal" title="Button" image="favoriteIcon"/>
-                                                    <connections>
-                                                        <action selector="buttonTap:" destination="7kZ-lx-rSW" eventType="touchUpInside" id="W8H-Xw-Qy2"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="oU4-af-riC" firstAttribute="leading" secondItem="7kZ-lx-rSW" secondAttribute="leadingMargin" constant="-4" id="Aqg-Sg-Y6s"/>
-                                            <constraint firstItem="6sO-YC-lh8" firstAttribute="bottom" secondItem="7kZ-lx-rSW" secondAttribute="bottomMargin" id="FXx-BM-W5c"/>
                                             <constraint firstAttribute="trailing" secondItem="2e6-Be-IrC" secondAttribute="trailing" id="Ifl-4A-EJX"/>
-                                            <constraint firstItem="6sO-YC-lh8" firstAttribute="trailing" secondItem="7kZ-lx-rSW" secondAttribute="trailingMargin" id="IgO-Xt-pXX"/>
                                             <constraint firstItem="2e6-Be-IrC" firstAttribute="top" secondItem="7kZ-lx-rSW" secondAttribute="top" id="YLc-9J-Q3W"/>
-                                            <constraint firstItem="6sO-YC-lh8" firstAttribute="top" secondItem="zxv-XU-JYz" secondAttribute="bottom" constant="2" id="dlQ-HY-j4o"/>
                                             <constraint firstItem="oU4-af-riC" firstAttribute="bottom" secondItem="7kZ-lx-rSW" secondAttribute="bottomMargin" id="eIM-u3-ozX"/>
                                             <constraint firstItem="oU4-af-riC" firstAttribute="top" secondItem="2e6-Be-IrC" secondAttribute="bottom" constant="7" id="h9X-MZ-i6A"/>
                                             <constraint firstAttribute="trailing" secondItem="oU4-af-riC" secondAttribute="trailing" constant="126" id="yty-Fb-7ah"/>
@@ -213,7 +200,6 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="cosmosView" destination="oU4-af-riC" id="xr5-bu-AkV"/>
-                                            <outlet property="favoriteButton" destination="6sO-YC-lh8" id="0Wp-yT-saI"/>
                                             <outlet property="photoViewCell" destination="2e6-Be-IrC" id="pOb-aQ-35D"/>
                                             <segue destination="XBe-ui-qeF" kind="show" identifier="MovieDetailViewSegue" id="pei-Lh-n8c"/>
                                         </connections>
@@ -267,16 +253,6 @@
                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="faL-ly-J8J">
-                                <rect key="frame" x="0.0" y="127" width="375" height="1"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o16-xU-OaA">
-                                <rect key="frame" x="0.0" y="181" width="375" height="1"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BBh-2z-W6d">
                                 <rect key="frame" x="234" y="141" width="125" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -300,12 +276,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UJq-V3-NFE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2184.8000000000002" y="-2522.7886056971515"/>
+            <point key="canvasLocation" x="1402" y="-2518"/>
         </scene>
-        <!--Detail View Controller-->
+        <!--Movie Detail View Controller-->
         <scene sceneID="LRZ-rP-5ew">
             <objects>
-                <viewController id="XBe-ui-qeF" customClass="DetailViewController" customModule="Flickster" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XBe-ui-qeF" customClass="MovieDetailViewController" customModule="Flickster" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tFu-9k-iVe"/>
                         <viewControllerLayoutGuide type="bottom" id="Pd0-3e-Rmv"/>
@@ -372,22 +348,18 @@
                             <constraint firstItem="Qp3-9q-ZjQ" firstAttribute="bottom" secondItem="Pd0-3e-Rmv" secondAttribute="top" id="vcD-QX-hTB"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ZXj-PU-qKX">
-                        <barButtonItem key="leftBarButtonItem" image="back" id="AgU-FF-OYP">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="ZXj-PU-qKX"/>
                     <connections>
-                        <outlet property="movieInfoView" destination="Wba-RC-bak" id="njN-2d-u60"/>
-                        <outlet property="overviewLabel" destination="aUB-bS-GPx" id="5y2-cA-7v5"/>
-                        <outlet property="posterImageView" destination="E6F-La-f4l" id="k7G-y7-UTY"/>
-                        <outlet property="scrollView" destination="Qp3-9q-ZjQ" id="ICt-uJ-vee"/>
-                        <outlet property="titleLabel" destination="Nzg-DM-w43" id="RT3-hs-97g"/>
+                        <outlet property="movieDescriptionView" destination="Wba-RC-bak" id="bRG-gI-f9a"/>
+                        <outlet property="movieOverviewLabel" destination="aUB-bS-GPx" id="Pcc-ni-IVc"/>
+                        <outlet property="moviePosterView" destination="E6F-La-f4l" id="8sK-Mz-aaI"/>
+                        <outlet property="movieScrollView" destination="Qp3-9q-ZjQ" id="vL3-Ed-FcV"/>
+                        <outlet property="movieTitleLabel" destination="Nzg-DM-w43" id="PFT-Qe-c3I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2U4-Oj-zlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2349.5999999999999" y="-1829.2353823088458"/>
+            <point key="canvasLocation" x="2185" y="-1828"/>
         </scene>
         <!--Favorite Movie View Controller-->
         <scene sceneID="e4I-U2-Vpt">
@@ -443,7 +415,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Jm-r9-sC7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2349.5999999999999" y="-1061.0194902548726"/>
+            <point key="canvasLocation" x="1402" y="-711"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lLN-pI-dVO">
@@ -451,10 +423,9 @@
                 <navigationController storyboardIdentifier="MoviesNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Lf1-Ph-9p2" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" opaque="NO" contentMode="scaleToFill" barStyle="black" id="SMb-d3-aMm">
+                    <navigationBar key="navigationBar" opaque="NO" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="SMb-d3-aMm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.80000000000000004" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -467,8 +438,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back" width="21" height="21"/>
-        <image name="favoriteIcon" width="44" height="44"/>
         <image name="settings" width="21" height="21"/>
     </resources>
 </document>

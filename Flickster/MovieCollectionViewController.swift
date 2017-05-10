@@ -436,7 +436,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                 movie = movies![indexPath!.row]
             }
             
-            let detailViewController = segue.destination as! DetailViewController
+            let detailViewController = segue.destination as! MovieDetailViewController
             detailViewController.movie = movie
         } else if segue.identifier == "SettingsViewSegue" {
             

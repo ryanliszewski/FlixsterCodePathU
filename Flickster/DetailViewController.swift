@@ -47,13 +47,13 @@ class DetailViewController: UIViewController, CLLocationManagerDelegate{
         
         scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: movieInfoView.frame.origin.y + (overviewLabel.frame.size.height) * 3)
 
-        let smallImageUrl = "https://image.tmdb.org/t/p/w45"
-        let largeImageUrl = "https://image.tmdb.org/t/p/original"
+        //let smallImageUrl = "https://image.tmdb.org/t/p/w45"
+        //let largeImageUrl = "https://image.tmdb.org/t/p/original"
         
         
         if let posterPath = movie["poster_path"] as? String {
-            let smallImageRequest = NSURLRequest(url: NSURL(string: smallImageUrl + posterPath) as! URL)
-            let largeImageRequest = NSURLRequest(url: NSURL(string: largeImageUrl + posterPath) as! URL)
+            let smallImageRequest = NSURLRequest(url: NSURL(string: M.URL.Image.SmallImage + posterPath) as! URL)
+            let largeImageRequest = NSURLRequest(url: NSURL(string: M.URL.Image.LargeImage + posterPath) as! URL)
             
             self.posterImageView.setImageWith(smallImageRequest as URLRequest, placeholderImage: nil, success: { (smallImageRequest, smallImageResponse, smallImage) in
                 
@@ -86,10 +86,6 @@ class DetailViewController: UIViewController, CLLocationManagerDelegate{
                 print(error)
             })
         }
-        
-        
-        print(movie)
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

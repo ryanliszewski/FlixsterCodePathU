@@ -13,14 +13,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
 
+        loadTabBar()
+        return true
+    }
+    
+    /*
+    //MARK
+     
+    //Loads TabBar controller.
+ 
+    */
+    
+    func loadTabBar(){
+        
         window = UIWindow(frame: UIScreen.main.bounds)
-        
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        
         
         let nowPlayingNavigationController = storyBoard.instantiateViewController(withIdentifier: "MoviesNavigationController") as! UINavigationController
         let nowPlayingViewController = nowPlayingNavigationController.topViewController as! MovieCollectionViewController
@@ -33,22 +42,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let topRatedViewController = topRatedNavigationController.topViewController as! MovieCollectionViewController
         
         topRatedViewController.endpoint = "top_rated"
+        topRatedViewController.tabBarItem.image = #imageLiteral(resourceName: "birthday")
         topRatedNavigationController.tabBarItem.title = "top rated"
         
-        let favoriteMovieNavigationController = storyBoard.instantiateViewController(withIdentifier: "FavoriteNavigationController") as! FavoriteMovieViewController
- 
-        favoriteMovieNavigationController.tabBarItem.title = "favorite movie"
-        
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [nowPlayingNavigationController, topRatedNavigationController, favoriteMovieNavigationController]
+        tabBarController.viewControllers = [nowPlayingNavigationController, topRatedNavigationController]
+        
+        UITabBar.appearance().tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
-        
-        return true
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
