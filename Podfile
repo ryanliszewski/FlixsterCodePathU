@@ -9,7 +9,8 @@ target 'Flickster' do
   pod ‘MBProgressHUD’
   pod ‘Cosmos’, '~> 8.0'
   pod 'SKSplashView'
-
+  pod 'BouncyLayout'
+  
   # Pods for Flickster
 
 end
