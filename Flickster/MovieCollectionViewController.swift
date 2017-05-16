@@ -23,7 +23,7 @@
     *
     * This is the CollectionViewController for the Flickster App. It makes an
     * API call to the movie database (https://developers.themoviedb.org/3/getting*-started)
-gitand populates the collection view with umovies in theatre's images, and rating
+      gitand populates the collection view with umovies in theatre's images, and rating
     * displayed as 5 stars using the UIControl Cosomos. (https://github.com/marketplacer/Cosmos)
     *
     */
@@ -70,8 +70,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     var favoriteMovies: [String: Any]!
     
     
-    
-    
     /**
         Initializes the collectionview
      
@@ -93,16 +91,11 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         let screenWidth = UIScreen.main.bounds.size.width
         let screenHeight = UIScreen.main.bounds.size.height
         
-        
         let bouncyLayout = BouncyLayout()
         UICollectionView(frame: .zero, collectionViewLayout: bouncyLayout)
         
-        
-        
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 3, bottom: 40, right: 3)
-        
-        
         
         if(test){
             layout.itemSize = CGSize(width: screenWidth - 10, height: screenHeight / 1.5)
@@ -110,19 +103,11 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
             layout.itemSize = CGSize(width: screenWidth / 2 - 5, height: screenHeight / 3)
         }
         
-        
-        let settingsButton = UIButton(type: .custom)
-        settingsButton.setImage(#imageLiteral(resourceName: "Image-2"), for: .normal)
-        settingsButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        settingsButton.addTarget(self, action: #selector(MovieCollectionViewController.settingsButtonClicked), for: .touchUpInside)
-        
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 4
         //collectionView!.collectionViewLayout = layout
         collectionView.setCollectionViewLayout(layout, animated: true)
         
-        
-      
         self.tabBarController?.tabBar.barTintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         self.tabBarController?.tabBar.isTranslucent = true
 
@@ -145,27 +130,23 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         self.movieApiCall()
     }
 
-    
-    /**
-        Makes an API call to get a dictionary of Movies.
-     
-        ## Important Notes ##
-        1. Calls the Movie Database - https://developers.themoviedb.org/3/getting-started
-        2. Hides the MBProdress Hud
-        3. Calls networkError() if the API call fails
-     
-    */
-    
-    func settingsButtonClicked(){
-        
-        self.performSegue(withIdentifier: "settings", sender: self)
-        
-    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
     }
     
-    func movieApiCall() -> Void {
+    
+    
+    /**
+     Makes an API call to get a dictionary of Movies.
+     
+     ## Important Notes ##
+     1. Calls the Movie Database - https://developers.themoviedb.org/3/getting-started
+     2. Hides the MBProdress Hud
+     3. Calls networkError() if the API call fails
+     
+     */
+    
+    func movieApiCall() {
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)&page=\(currentPageNumber)")!
@@ -201,6 +182,50 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         }
         task.resume()
     }
+    
+    
+    
+    func loadMoreData(){
+        currentPageNumber += 1
+        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)&page=\(currentPageNumber)")!
+        
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
+        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
+        
+        let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+            if let data = data {
+                if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
+                    MBProgressHUD.hide(for: self.view, animated:true)
+                    
+                    
+                    
+                    let newMovies = dataDictionary["results"] as! [NSDictionary]
+                    
+                    self.movies?.append(contentsOf: newMovies)
+                    
+                    self.filteredMovies = self.movies
+                    
+                    self.collectionView.reloadData()
+                    self.networkErrorView.isHidden = true
+                    //self.searchBar.isHidden = false
+                    
+                    print(dataDictionary)
+                    
+                    MBProgressHUD.hide(for: self.view, animated:true)
+                    self.refreshControl.endRefreshing()
+                    
+                }
+            } else {
+                self.networkError()
+                self.movieApiCall()
+            }
+        }
+        isMoreDataLoading = false
+        task.resume()
+    }
+
+    
     
     
     
@@ -429,49 +454,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                 isMoreDataLoading = true
                 loadMoreData()
             }
-            
         }
     }
-    
-    func loadMoreData(){
-        currentPageNumber += 1
-        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)&page=\(currentPageNumber)")!
-        
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
-        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-        
-        let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-            if let data = data {
-                if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-                    MBProgressHUD.hide(for: self.view, animated:true)
-                    
-                    
-                    
-                    let newMovies = dataDictionary["results"] as! [NSDictionary]
-                    
-                    self.movies?.append(contentsOf: newMovies)
-                    
-                    self.filteredMovies = self.movies
-                    
-                    self.collectionView.reloadData()
-                    self.networkErrorView.isHidden = true
-                    //self.searchBar.isHidden = false
-                    
-                    print(dataDictionary)
-                    
-                    MBProgressHUD.hide(for: self.view, animated:true)
-                    self.refreshControl.endRefreshing()
-                    
-                }
-            } else {
-                self.networkError()
-                self.movieApiCall()
-            }
-        }
-        isMoreDataLoading = false
-        task.resume()
-    }
-    
 }
    
