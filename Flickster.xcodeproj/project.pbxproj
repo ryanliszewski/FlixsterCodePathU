@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		73391A051EC285DC002843DE /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73391A041EC285DC002843DE /* MovieDetailViewController.swift */; };
 		73391A071EC289D3002843DE /* M.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73391A061EC289D3002843DE /* M.swift */; };
+		7340FF841ECAA91D00F974BF /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7340FF831ECAA91D00F974BF /* InfiniteScrollActivityView.swift */; };
 		7343FFCD1E43AF9C009D4D26 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7343FFCC1E43AF9C009D4D26 /* CollectionViewCell.swift */; };
 		735AD52B1E431E230061E1B3 /* MovieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AD52A1E431E230061E1B3 /* MovieCollectionViewController.swift */; };
 		735FCDA91E4E077400521447 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735FCDA81E4E077400521447 /* SettingsViewController.swift */; };
@@ -29,6 +30,7 @@
 		732FABDB1E4AD71300A6CEA3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		73391A041EC285DC002843DE /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		73391A061EC289D3002843DE /* M.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M.swift; sourceTree = "<group>"; };
+		7340FF831ECAA91D00F974BF /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
 		7343FFCC1E43AF9C009D4D26 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		735AD52A1E431E230061E1B3 /* MovieCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewController.swift; sourceTree = "<group>"; };
 		735FCDA81E4E077400521447 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			children = (
 				7343FFCC1E43AF9C009D4D26 /* CollectionViewCell.swift */,
 				73EC4D2B1E43B40A009353F6 /* NetworkErrorView.swift */,
+				7340FF831ECAA91D00F974BF /* InfiniteScrollActivityView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7340FF841ECAA91D00F974BF /* InfiniteScrollActivityView.swift in Sources */,
 				73DE033E1E5579AD00EFF4BB /* FavoriteMovieViewController.swift in Sources */,
 				7343FFCD1E43AF9C009D4D26 /* CollectionViewCell.swift in Sources */,
 				73B72E2B1E3F03F800267E05 /* AppDelegate.swift in Sources */,

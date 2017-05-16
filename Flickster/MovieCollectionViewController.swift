@@ -54,7 +54,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     var currentPageNumber = 1
     
-    
     var isMoreDataLoading = false
     
     var movies: [NSDictionary]!
@@ -68,6 +67,8 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     var favoriteCounts: Int!
     
     var favoriteMovies: [String: Any]!
+    
+    var loadingMoreMoviesView: InfiniteScrollActivityView?
     
     
     /**
@@ -127,7 +128,17 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
-        self.movieApiCall()
+        //Set Up infinite scroll loading indicator view
+        let frame = CGRect(x: 0, y: collectionView.contentSize.height, width: collectionView.bounds.size.height, height: InfiniteScrollActivityView.defaultHeight)
+        loadingMoreMoviesView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreMoviesView?.isHidden = true
+        collectionView.addSubview(loadingMoreMoviesView!)
+        
+        var insets = collectionView.contentInset
+        insets.bottom = InfiniteScrollActivityView.defaultHeight
+        collectionView.contentInset = insets
+        
+        movieApiCall()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -214,6 +225,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                     
                     MBProgressHUD.hide(for: self.view, animated:true)
                     self.refreshControl.endRefreshing()
+                    self.loadingMoreMoviesView?.stopAnimating()
                     
                 }
             } else {
@@ -271,7 +283,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
     */
     
 
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if let filteredMovies = filteredMovies, let movies = movies{
             if movies.count > filteredMovies.count{
@@ -295,11 +307,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         4.  Fades in images when theyre first loaded.
 
     */
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        
-        
-        
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell" , for: indexPath as IndexPath) as! CollectionViewCell
        
         //cell.favoriteIconImageView.image = #imageLiteral(resourceName: "favoriteIcon")
@@ -452,6 +460,10 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
             
             if(scrollView.contentOffset.y > scrollOffsetThreshold && collectionView.isDragging){
                 isMoreDataLoading = true
+                
+                let frame = CGRect(x: 0, y: collectionView.contentSize.height, width: collectionView.bounds.size.height, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreMoviesView?.frame = frame
+                loadingMoreMoviesView!.startAnimating()
                 loadMoreData()
             }
         }
