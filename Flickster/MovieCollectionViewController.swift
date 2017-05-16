@@ -129,7 +129,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
         //Set Up infinite scroll loading indicator view
-        let frame = CGRect(x: 0, y: collectionView.contentSize.height, width: collectionView.bounds.size.height, height: InfiniteScrollActivityView.defaultHeight)
+        let frame = CGRect(x: 0, y: collectionView.contentSize.height, width: collectionView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
         loadingMoreMoviesView = InfiniteScrollActivityView(frame: frame)
         loadingMoreMoviesView?.isHidden = true
         collectionView.addSubview(loadingMoreMoviesView!)
@@ -170,18 +170,13 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                 if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
                     MBProgressHUD.hide(for: self.view, animated:true)
            
-                    
-                    
                     self.movies = dataDictionary["results"] as? [NSDictionary]
-                    print(self.movies!)
                     
                     self.filteredMovies = self.movies
                     
                     self.collectionView.reloadData()
                     self.networkErrorView.isHidden = true
-                    //self.searchBar.isHidden = false
-                    
-                   
+
                     MBProgressHUD.hide(for: self.view, animated:true)
                     self.refreshControl.endRefreshing()
                     
@@ -193,7 +188,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         }
         task.resume()
     }
-    
     
     
     func loadMoreData(){
@@ -219,9 +213,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                     
                     self.collectionView.reloadData()
                     self.networkErrorView.isHidden = true
-                    //self.searchBar.isHidden = false
-                    
-                    print(dataDictionary)
                     
                     MBProgressHUD.hide(for: self.view, animated:true)
                     self.refreshControl.endRefreshing()
@@ -237,11 +228,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         task.resume()
     }
 
-    
-    
-    
-    
-    
     /**
         Called when the user pulls down on the view. 
      
@@ -338,9 +324,7 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
                     cell.photoViewCell.image = largeImage
                     
                     UIView.animate(withDuration: 0.1, animations: { () -> Void in
-                        
                         cell.photoViewCell.alpha = 1.0
-                        
                     })
                     
                 } else {
@@ -353,17 +337,9 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         }
         
         cell.tapAction = {(cell) in
-            print("FUCK YES")
-            
             self.userDefults.set(movie, forKey: "FavoriteMovie")
             self.userDefults.synchronize()
-            
-        
-            
         }
-        
-        
-        
         return cell
     }
     
@@ -430,8 +406,25 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
         searchBar.resignFirstResponder()
         
     }
-        
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if(!isMoreDataLoading){
+            let scrollViewContentHeight = collectionView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - collectionView.bounds.size.height
+            
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && collectionView.isDragging){
+                
+                print("test")
+                isMoreDataLoading = true
+                
+                let frame = CGRect(x: 0, y: collectionView.contentSize.height - 40, width: collectionView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreMoviesView?.frame = frame
+                loadingMoreMoviesView!.startAnimating()
+                loadMoreData()
+            }
+        }
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "MovieDetailViewSegue" {
@@ -451,22 +444,6 @@ class MovieCollectionViewController: UIViewController, UICollectionViewDelegate,
             
         }
 
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if(!isMoreDataLoading){
-            let scrollViewContentHeight = collectionView.contentSize.height
-            let scrollOffsetThreshold = scrollViewContentHeight - collectionView.bounds.height
-            
-            if(scrollView.contentOffset.y > scrollOffsetThreshold && collectionView.isDragging){
-                isMoreDataLoading = true
-                
-                let frame = CGRect(x: 0, y: collectionView.contentSize.height, width: collectionView.bounds.size.height, height: InfiniteScrollActivityView.defaultHeight)
-                loadingMoreMoviesView?.frame = frame
-                loadingMoreMoviesView!.startAnimating()
-                loadMoreData()
-            }
-        }
     }
 }
    
