@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -20,25 +20,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQh-Gh-jPj">
+                            <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="hQh-Gh-jPj">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Image-1" translatesAutoresizingMaskIntoConstraints="NO" id="4SZ-vc-pg1">
-                                        <rect key="frame" x="80" y="153" width="200" height="225"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flickster" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vW0-0f-oWy">
-                                        <rect key="frame" x="126" y="386" width="122" height="63"/>
-                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="39"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="caK-fQ-bEd">
+                                        <rect key="frame" x="87" y="190" width="200" height="287.5"/>
+                                        <subviews>
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Image-1" translatesAutoresizingMaskIntoConstraints="NO" id="4SZ-vc-pg1">
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="225"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flickster" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vW0-0f-oWy">
+                                                <rect key="frame" x="39" y="225" width="122" height="62.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="122" id="FQW-Wy-tyo"/>
+                                                    <constraint firstAttribute="height" constant="62.5" id="lP6-xS-Enj"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="39"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="4SZ-vc-pg1" firstAttribute="leading" secondItem="hQh-Gh-jPj" secondAttribute="leading" constant="80" id="BG1-VR-7m0"/>
-                                    <constraint firstItem="vW0-0f-oWy" firstAttribute="top" secondItem="4SZ-vc-pg1" secondAttribute="bottom" constant="8" symbolic="YES" id="Rdi-nE-vbW"/>
-                                    <constraint firstItem="4SZ-vc-pg1" firstAttribute="top" secondItem="hQh-Gh-jPj" secondAttribute="top" constant="153" id="eff-H7-veK"/>
-                                    <constraint firstItem="vW0-0f-oWy" firstAttribute="centerX" secondItem="hQh-Gh-jPj" secondAttribute="centerX" id="s0q-SF-h3q"/>
+                                    <constraint firstItem="caK-fQ-bEd" firstAttribute="centerX" secondItem="hQh-Gh-jPj" secondAttribute="centerX" id="Y01-m8-Cla"/>
+                                    <constraint firstItem="caK-fQ-bEd" firstAttribute="centerY" secondItem="hQh-Gh-jPj" secondAttribute="centerY" id="fef-4w-OPx"/>
                                 </constraints>
                             </view>
                         </subviews>
