@@ -63,9 +63,6 @@ class FavoriteMovieViewController: UIViewController {
                 print(error)
             })
         }
-
-        
-        
         titleLabel.text = movie?["title"] as? String
         overviewLabel.text = movie?["overview"] as? String 
         
